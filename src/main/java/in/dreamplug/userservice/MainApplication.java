@@ -3,11 +3,12 @@ package in.dreamplug.userservice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.time.LocalDateTime;
 
 @SpringBootApplication(scanBasePackages = {"in.dreamplug.userservice"})
-//@EnableJpaRepositories(basePackages = "in.dreamplug.userservice.repository")
+@EnableJpaRepositories(basePackages = "in.dreamplug.userservice.repository")
 @Slf4j
 public class MainApplication {
 
