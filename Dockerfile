@@ -6,7 +6,7 @@ ADD . /build/
 VOLUME /tmp
 
 WORKDIR /app
-COPY build/libs/bootcamp-*.jar /app/app.jar
+COPY build/libs/bootcamp*.jar /app/app.jar
 VOLUME /opt/config
 
 EXPOSE 25050
