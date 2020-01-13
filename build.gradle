@@ -1,3 +1,8 @@
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+
 group 'in.dreamplug.net'
 version '1.0-SNAPSHOT'
 
@@ -10,10 +15,16 @@ buildscript {
             url "http://nexus.infra.dreamplug.net/repository/maven-public"
         }
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
     }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+
 }
 
 
@@ -44,6 +55,16 @@ repositories {
     }
     mavenCentral()
 }
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+artifacts {
+    shadowJar
+}
+jar.enabled = false
+build.dependsOn(shadowJar)
 
 
 dependencies {
