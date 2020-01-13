@@ -23,7 +23,7 @@ container_environment:
           }
         },
         {
-          "prefix": "/conf/common/{{ DP_RUN_ENV }}",
+          "prefix": "/conf/stage/{{ DP_RUN_ENV }}",
           "region": "ap-south-1",
           "keys": {
           }
