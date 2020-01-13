@@ -1,0 +1,34 @@
+version: 0.2
+
+env:
+  variables:
+    k1: v1
+  parameter-store:
+    DP_NEXUS_USER: /conf/nexus/common/v1/DP_NEXUS_USER
+    DP_NEXUS_PASS: /conf/nexus/common/v1/DP_NEXUS_PASS
+    DP_NEXUS_URL: /conf/nexus/common/v1/DP_NEXUS_URL
+    DP_ID_RSA: /conf/device-service/common/v1/DP_ID_RSA
+    {{ codebuild.cache.id_rsa_key }}: {{ codebuild.cache.id_rsa_value }}
+
+phases:
+  pre_build:
+    commands:
+      - echo Build starting on `date`
+      - ./codepipeline/nexus_m2_settings.sh
+      - ./codepipeline/ssh_keys_from_ssm.sh
+      - ls -l $HOME/.ssh && cat $HOME/.ssh/config && head -3 $HOME/.ssh/id_rsa
+      - ./codepipeline/codebuild-cache.sh $HOME/.m2 $HOME/.gradle
+  build:
+    commands:
+    - echo Build started on `date` for commit id {{ git_tag }}
+    - ls
+    - ./gradlew clean shadowJar
+    - ls -al ./build/libs/
+  post_build:
+    commands:
+    - echo Build completed on `date` for commit id {{ git_tag }}
+    - ./codepipeline/codebuild-cache.sh 
+artifacts:
+  files:
+  - '**/*'
+  discard-paths: no

@@ -1,0 +1,32 @@
+desired_count: 2
+path: "/"
+container_port: 25050
+alb_scheme: internal
+health_check_path: "/actuator/info"
+container_cpu: 10
+container_memory: 1536
+container_environment:
+- name: DP_SSM_KEYS
+  value: >-
+    {
+      "region": "ap-south-1",
+      "prefixed_keys": [
+        {
+          "prefix": "/conf/{{ DP_SERVICE_NAME }}/{{ DP_RUN_ENV }}",
+          "region": "ap-south-1",
+          "keys": {
+            "v1/DB_HOST": {},
+            "v1/DB_NAME": {},
+            "v1/DB_PORT": {},
+            "v1/DB_USER": {},
+            "v1/DB_PASSWORD": {}
+          }
+        },
+        {
+          "prefix": "/conf/common/{{ DP_RUN_ENV }}",
+          "region": "ap-south-1",
+          "keys": {
+          }
+        }
+      ]
+    }
