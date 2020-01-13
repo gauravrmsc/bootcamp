@@ -22,7 +22,7 @@ phases:
     commands:
     - echo Build started on `date` for commit id {{ git_tag }}
     - ls
-    - ./gradlew clean shadowJar
+    - ./gradlew clean build -x test
     - ls -al ./build/libs/
   post_build:
     commands:
