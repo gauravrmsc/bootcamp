@@ -1,5 +1,6 @@
 package in.dreamplug.userservice.controllers;
 
+import datadog.trace.api.Trace;
 import in.dreamplug.userservice.entry.UserEntry;
 import in.dreamplug.userservice.services.manager.IUserDetailManager;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class UserDetailController {
 
     private static final String USER_ID= "USER_ID";
 
+    @Trace
     @GetMapping(path = "/{"+USER_ID+"}",
             produces =  {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody ResponseEntity get(@NotEmpty @PathVariable(USER_ID) Long userId){
@@ -45,6 +47,7 @@ public class UserDetailController {
     }
 
 
+    @Trace
     @PostMapping(path = "/",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
