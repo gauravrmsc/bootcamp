@@ -2,7 +2,11 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: miteshsjdp/codepipeline:latest
+image:
+  name:  credsre/codepipeline:latest
+  username: $DOCKER_HUB_USERNAME
+  password: $DOCKER_HUB_PASSWORD
+  email: $DOCKER_HUB_EMAIL
 
 pipelines:
   default:
