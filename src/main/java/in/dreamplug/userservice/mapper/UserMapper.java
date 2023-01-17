@@ -10,5 +10,5 @@ import in.dreamplug.userservice.entity.User;
  */
 @Mapper (componentModel = "spring")
 public interface UserMapper {
-    public User buildUser(UserRequest userRequest);
+    User buildUser(UserRequest userRequest);
 }

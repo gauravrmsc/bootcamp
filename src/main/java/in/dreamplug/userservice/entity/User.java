@@ -15,7 +15,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@JsonNaming (PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude (JsonInclude.Include.NON_NULL)
 public class User extends BaseEntity {
     private String userName;
