@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import in.dreamplug.userservice.dto.UserRequest;
 import in.dreamplug.userservice.entity.User;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -31,8 +32,10 @@ public class UserDetailController {
     }
 
     @PostMapping (path = "/")
-    public @ResponseBody ResponseEntity createUser(@Valid @RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+    public @ResponseBody ResponseEntity<User> createUser(@Valid @RequestBody UserRequest user) {
+        return ResponseEntity.status(HttpStatus.OK)
+                             .body(User.builder().id((long) new Random().nextInt(0, Integer.MAX_VALUE)).userName(user.getUserName())
+                                       .address(user.getAddress()).build());
     }
 
     //TODO Create Put Endpoint
