@@ -1,0 +1,10 @@
+server:
+  port: 8082
+  servlet:
+    context-path: "/user-service"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
