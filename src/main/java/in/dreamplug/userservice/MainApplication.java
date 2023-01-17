@@ -18,7 +18,8 @@ public class MainApplication {
 
 
 /*
- * Spring Actuator : https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/reference/htmlsingle/#production-ready-endpoints-enabling-endpoints
+ *  @SpringBootApplication Annotation: https://www.digitalocean.com/community/tutorials/springbootapplication-springapplication
+ *  Spring Actuator : https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/reference/htmlsingle/#production-ready-endpoints-enabling-endpoints
  * Important Actuator Endpoints
  * http://localhost:8082/user-service/actuator/health
  * http://localhost:8082/user-service/actuator/beans
