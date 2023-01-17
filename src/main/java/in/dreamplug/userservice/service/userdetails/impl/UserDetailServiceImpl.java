@@ -30,10 +30,18 @@ public class UserDetailServiceImpl implements IUserDetailService {
 
     @Override
     public User create(UserRequest userRequest) {
+        if (userContactMap.containsKey(userRequest.getMobileNumber())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        User user = userMapper.buildUser(userRequest);
+        users.put(user.getExternalId(), user);
+        userContactMap.put(user.getMobileNumber(), user);
+        return user;
     }
 
     @Override
     public User findByUserId(String userId) {
+        return Optional.ofNullable(users.get(userId)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     //TODO Create Put Endpoint

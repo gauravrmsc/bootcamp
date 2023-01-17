@@ -23,19 +23,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping ("/users")
+@RequiredArgsConstructor
 public class UserDetailController {
     private static final String USER_ID = "USER_ID";
 
+    private final IUserDetailService userDetailService;
+
     @GetMapping (path = "/{" + USER_ID + "}")
     public ResponseEntity<User> getUser(@NotEmpty @PathVariable (USER_ID) String userId) {
-        return ResponseEntity.ok(User.builder().id((long) new Random().nextInt(0, Integer.MAX_VALUE)).userName("CRED User").build());
+        return ResponseEntity.ok(userDetailService.findByUserId(userId));
     }
 
-    @PostMapping (path = "/")
-    public @ResponseBody ResponseEntity<User> createUser(@Valid @RequestBody UserRequest user) {
-        return ResponseEntity.status(HttpStatus.OK)
-                             .body(User.builder().id((long) new Random().nextInt(0, Integer.MAX_VALUE)).userName(user.getUserName())
-                                       .address(user.getAddress()).build());
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(userDetailService.create(userRequest));
     }
 
     //TODO Create Put Endpoint
