@@ -29,7 +29,7 @@ public class User extends BaseEntity {
     private String address;
 
     @Builder
-    private User(Long id, String externalId, LocalDateTime createdAt, String createdBy, LocalDateTime updatedAt, String lastModifiedBy, Long version,
+    public User(Long id, String externalId, LocalDateTime createdAt, String createdBy, LocalDateTime updatedAt, String lastModifiedBy, Long version,
             String userName, LocalDate dateOfBirth, String mobileNumber, String mailId, String address) {
         super(id, externalId, createdAt, createdBy, updatedAt, lastModifiedBy, version);
         this.userName = userName;
