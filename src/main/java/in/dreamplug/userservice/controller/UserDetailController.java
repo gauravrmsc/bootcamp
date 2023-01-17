@@ -1,7 +1,18 @@
 package in.dreamplug.userservice.controller;
 
+import java.util.Random;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import in.dreamplug.userservice.entity.User;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -11,4 +22,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping ("/users")
-public class UserDetailController {}
+public class UserDetailController {
+    private static final String USER_ID = "USER_ID";
+
+    @GetMapping (path = "/{" + USER_ID + "}")
+    public ResponseEntity<User> getUser(@NotEmpty @PathVariable (USER_ID) String userId) {
+        return ResponseEntity.ok(User.builder().id((long) new Random().nextInt(0, Integer.MAX_VALUE)).userName("CRED User").build());
+    }
+
+    @PostMapping (path = "/")
+    public @ResponseBody ResponseEntity createUser(@Valid @RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
+    //TODO Create Put Endpoint
+}
