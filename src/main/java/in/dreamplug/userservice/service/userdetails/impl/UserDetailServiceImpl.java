@@ -1,55 +1,42 @@
 package in.dreamplug.userservice.service.userdetails.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import in.dreamplug.userservice.dto.UserRequest;
 import in.dreamplug.userservice.entity.User;
 import in.dreamplug.userservice.mapper.UserMapper;
+import in.dreamplug.userservice.repository.UserDetailRepository;
 import in.dreamplug.userservice.service.userdetails.IUserDetailService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author gauravkumar
  * @since 17/01/23
  */
-@Service
+@Service ("UserDetailServiceImpl")
+@RequiredArgsConstructor
 public class UserDetailServiceImpl implements IUserDetailService {
-    private final Map<String, User> users = new HashMap<>();
-
-    private final Map<String, User> userContactMap = new HashMap<>();
+    @Autowired
+    private final UserDetailRepository userDetailRepository;
 
     private final UserMapper userMapper;
 
-    public UserDetailServiceImpl(UserMapper userMapper) {
-        initUsers();
-        this.userMapper = userMapper;
-    }
-
     @Override
     public User create(UserRequest userRequest) {
-        if (userContactMap.containsKey(userRequest.getMobileNumber())) {
+        if (userDetailRepository.findByMobileNumber(userRequest.getMobileNumber()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         User user = userMapper.buildUser(userRequest);
-        users.put(user.getExternalId(), user);
-        userContactMap.put(user.getMobileNumber(), user);
+        userDetailRepository.save(user);
         return user;
     }
 
     @Override
     public User findByUserId(String userId) {
-        return Optional.ofNullable(users.get(userId)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return userDetailRepository.findByExternalId(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     //TODO Create Put Endpoint
-
-    private void initUsers() {
-        users.put("user_id1", User.builder().externalId("user_id1").userName("user1").mobileNumber("8340312345").build());
-        users.put("user_id2", User.builder().externalId("user_id2").userName("user2").mobileNumber("8340312345").build());
-        users.put("user_id3", User.builder().externalId("user_id3").userName("user3").mobileNumber("8340312345").build());
-        users.values().stream().forEach(user -> userContactMap.put(user.getMobileNumber(), user));
-    }
 }

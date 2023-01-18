@@ -2,6 +2,7 @@ package in.dreamplug.userservice.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +12,6 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Version;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +22,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-@AllArgsConstructor
 public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -57,6 +56,7 @@ public abstract class BaseEntity implements Serializable {
             this.createdBy = "system";
             this.updatedBy = "system";
         }
+        this.externalId = UUID.randomUUID().toString();
     }
 
     @PreUpdate

@@ -1,11 +1,9 @@
 package in.dreamplug.userservice.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,15 +26,4 @@ public class User extends BaseEntity {
     private String mailId;
 
     private String address;
-
-    @Builder
-    public User(Long id, String externalId, LocalDateTime createdAt, String createdBy, LocalDateTime updatedAt, String lastModifiedBy, Long version,
-            String userName, LocalDate dateOfBirth, String mobileNumber, String mailId, String address) {
-        super(id, externalId, createdAt, createdBy, updatedAt, lastModifiedBy, version);
-        this.userName = userName;
-        this.dateOfBirth = dateOfBirth;
-        this.mobileNumber = mobileNumber;
-        this.mailId = mailId;
-        this.address = address;
-    }
 }
