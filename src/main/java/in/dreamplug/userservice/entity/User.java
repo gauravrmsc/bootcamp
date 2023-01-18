@@ -3,8 +3,8 @@ package in.dreamplug.userservice.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +15,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Entity
+@Table (name = "users")
 @JsonInclude (JsonInclude.Include.NON_NULL)
 public class User extends BaseEntity {
     private String userName;
